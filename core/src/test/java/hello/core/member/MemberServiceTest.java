@@ -3,9 +3,12 @@ package hello.core.member;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import hello.core.order.AppConfig;
+
 public class MemberServiceTest {
 	
-	MemberService memberService = new MemberServiceImpl();
+	AppConfig appConfig = new AppConfig();
+	MemberService memberService = appConfig.memberService();
 	
 	@Test
 	void join() {

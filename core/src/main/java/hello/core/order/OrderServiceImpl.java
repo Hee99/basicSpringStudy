@@ -7,7 +7,7 @@ import hello.core.member.MemoryMemberRepository;
 
 public class OrderServiceImpl implements OrderService {
 
-	private final MemberRepository memberRepository = new MemoryMemberRepository();
+	//private final MemberRepository memberRepository = new MemoryMemberRepository();
 	//private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
 	//private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
 	
@@ -21,12 +21,20 @@ public class OrderServiceImpl implements OrderService {
 	 * 
 	 * 해결 : 추상(인터페이스)에만 의존하도록 변경
 	*/
-	
+
+	private MemberRepository memberRepository;
 	private DiscountPolicy discountPolicy;
 	
 	/*
 	 * 문제 : 구현체가 없어 코드 실행불가 -> null pointer exception 발생
+	 * 
+	 * 해결 : 앱 구동방식 구성하는 Config 객체가 구현체 선택할 수 있도록 매개변수 있는 생성자 사용
 	*/
+
+	public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+		this.memberRepository = memberRepository;
+		this.discountPolicy = discountPolicy;
+	}
 	
 	@Override
 	public Order createOrder(Long memberId, String itemName, int itemPrice) {
@@ -38,5 +46,7 @@ public class OrderServiceImpl implements OrderService {
 		//최종 생성된 주문 객체 반환
 		return new Order(memberId, itemName, itemPrice, discountPrice);
 	}
+
+
 
 }
