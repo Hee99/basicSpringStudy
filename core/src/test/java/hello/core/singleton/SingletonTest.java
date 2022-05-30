@@ -1,8 +1,11 @@
 package hello.core.singleton;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import hello.core.member.MemberService;
 import hello.core.order.AppConfig;
@@ -31,6 +34,18 @@ public class SingletonTest {
 		//isSameAs : == 비교(참조주소 비교)
 		//isEqualTo : equals() 비교
 	}
+	
+	@Test
+	@DisplayName("스프링 컨테이너와 싱글톤")
+	void springContainer() {
+		ApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
+		//1. 조회 :호출할 때마다 객체 생성
+		MemberService memberService1 = ac.getBean("memberService", MemberService.class);
+		MemberService memberService2 = ac.getBean("memberService", MemberService.class);
+		
+		assertThat(memberService1).isSameAs(memberService2);
+	}
+	
 	
 
 }
