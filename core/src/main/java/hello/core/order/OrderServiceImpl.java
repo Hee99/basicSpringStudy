@@ -1,10 +1,13 @@
 package hello.core.order;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import hello.core.discount.DiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
-import hello.core.member.MemoryMemberRepository;
 
+@Component
 public class OrderServiceImpl implements OrderService {
 
 	//private final MemberRepository memberRepository = new MemoryMemberRepository();
@@ -30,7 +33,8 @@ public class OrderServiceImpl implements OrderService {
 	 * 
 	 * 해결 : 앱 구동방식 구성하는 Config 객체가 구현체 선택할 수 있도록 매개변수 있는 생성자 사용
 	*/
-
+	
+	@Autowired
 	public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
 		this.memberRepository = memberRepository;
 		this.discountPolicy = discountPolicy;
